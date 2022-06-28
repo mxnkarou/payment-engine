@@ -1,4 +1,4 @@
-# CLI Payments Engine
+# CLI Payment Engine
 
 A simple engine to parse and evaluate transaction CSV files.
 
