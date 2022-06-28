@@ -1,32 +1,6 @@
 use std::fmt::Display;
 use crate::{ClientId, parser::ParseError};
 
-#[derive(Debug, Clone)]
-pub enum EngineError {
-    ClientIdMismatch(ClientId, ClientId),
-}
-
-impl Display for EngineError {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        match self {
-            EngineError::ClientIdMismatch(id1, id2) => {
-                f.write_fmt(format_args!("Client Id Mismatch: {} != {}", id1, id2))
-            }
-        }
-    }
-}
-
-
-/// This struct represents an `EngineError` occuring on a specific line.
-#[derive(Debug, Clone)]
-pub struct RuntimeError(pub usize, pub EngineError);
-
-impl Display for RuntimeError {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_fmt(format_args!("[line {}] {}", self.0, self.1))
-    }
-}
-
 /// This enum represents any error that might occur during this program
 #[derive(Debug, Clone)]
 pub enum Error {
@@ -74,3 +48,29 @@ impl From<Error> for String {
         format!("{e}")
     }
 }
+
+#[derive(Debug, Clone)]
+pub enum EngineError {
+    ClientIdMismatch(ClientId, ClientId),
+}
+
+impl Display for EngineError {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            EngineError::ClientIdMismatch(id1, id2) => {
+                f.write_fmt(format_args!("Client Id Mismatch: {} != {}", id1, id2))
+            }
+        }
+    }
+}
+
+/// This struct represents an `EngineError` occuring on a specific line.
+#[derive(Debug, Clone)]
+pub struct RuntimeError(pub usize, pub EngineError);
+
+impl Display for RuntimeError {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.write_fmt(format_args!("[line {}] {}", self.0, self.1))
+    }
+}
+
